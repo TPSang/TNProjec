@@ -1,5 +1,6 @@
-package com.poly.app.Entity;
+package com.sami.store.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -16,28 +17,19 @@ public class Users {
     @Column(name = "username", nullable = false, unique = true)
     private String username;
 
+    @JsonIgnore
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "fullname",columnDefinition = "nvarchar(100)")
-    private String fullname;
+    @Column(name = "name", nullable = false)
+    private String name;
 
-    @OneToMany(mappedBy = "users", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Address> addresses = new ArrayList<>();
-
-    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Oders> oderses = new ArrayList<>();
-
-    public List<Oders> getOderses() {
-        return oderses;
-    }
-
-    public void setOderses(List<Oders> oderses) {
-        this.oderses = oderses;
-    }
 
     public List<Address> getAddresses() {
         return addresses;
@@ -47,12 +39,12 @@ public class Users {
         this.addresses = addresses;
     }
 
-    public String getFullname() {
-        return fullname;
+    public String getName() {
+        return name;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {

@@ -1,4 +1,4 @@
-package com.poly.app.Entity;
+package com.sami.store.entities;
 
 import jakarta.persistence.*;
 
@@ -8,15 +8,18 @@ import java.util.List;
 @Table(name = "categories")
 @Entity
 public class Categories {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "categories", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @Column(name = "logo", nullable = false)
+    private String logo;
+
+    @OneToMany(mappedBy = "categories", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Products> products = new ArrayList<>();
 
     public List<Products> getProducts() {
@@ -25,6 +28,14 @@ public class Categories {
 
     public void setProducts(List<Products> products) {
         this.products = products;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 
     public String getName() {

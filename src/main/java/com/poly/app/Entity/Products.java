@@ -2,6 +2,9 @@ package com.poly.app.Entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Table(name = "products")
 @Entity
 public class Products {
@@ -22,6 +25,7 @@ public class Products {
     @Column(name = "price", nullable = false)
     private Integer price;
 
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "categories_id", nullable = false)
     private Categories categories;
@@ -30,6 +34,40 @@ public class Products {
     @ManyToOne(cascade = CascadeType.REMOVE, optional = false)
     @JoinColumn(name = "address_id", nullable = false)
     private Address address;
+
+    @Column(name = "type", nullable = false)
+    private String type;
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "inventories_id")
+    private Inventories inventories;
+
+    @OneToMany(mappedBy = "products", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Oders> oderses = new ArrayList<>();
+
+    public List<Oders> getOderses() {
+        return oderses;
+    }
+
+    public void setOderses(List<Oders> oderses) {
+        this.oderses = oderses;
+    }
+
+    public Inventories getInventories() {
+        return inventories;
+    }
+
+    public void setInventories(Inventories inventories) {
+        this.inventories = inventories;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public Address getAddress() {
         return address;
